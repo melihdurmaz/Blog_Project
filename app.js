@@ -26,18 +26,33 @@ server.listen(port,hostname,()=>{
 const path=require('path')
 const express = require('express')
 const exp = require('constants')
+const expphbs=require('express-handlebars')
+
+
+
 const app = express()
 const port = 3000
 const hostname ='127.0.0.1'
 
  app.use(express.static('Public'))
-
+/**alttaki iki satırda handlebars ı kullandık */
+ app.engine('handlebars', expphbs.engine());
+ app.set('view engine', 'handlebars');
 
 
  app.get('/',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,'site/index.html'))
+    res.render('site/index') //burada sadece sayfayı çağırdım 
  })
 
+ app.get('/about',(req,res)=>{
+    res.render('site/about') //burada sadece sayfayı çağırdım 
+ })
+
+
+ app.get('/blog',(req,res)=>{
+    res.render('site/blog') //burada sadece sayfayı çağırdım 
+ })
+ 
 
 
 
