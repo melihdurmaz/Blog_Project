@@ -15,26 +15,15 @@ const hostname ='127.0.0.1'
  app.engine('handlebars', expphbs.engine());
  app.set('view engine', 'handlebars');
 
+
+ //routers klasorünü kullanmak için klasörü dahil ettik
+ const main=require('./routers/main')
+ app.use('/',main)   //sayfa yönlendirmeleri için main klasörünü kullandım
+
+
+
  mongoose.connect('mongodb://127.0.0.1:3000/nodeblog_db')
  .then(() => console.log('Connected!'))
-
-
-
- app.get('/',(req,res)=>{
-    res.render('site/index') //burada sadece sayfayı çağırdım 
- })
-
- app.get('/about',(req,res)=>{
-    res.render('site/about') //burada sadece sayfayı çağırdım 
- })
-
-
- app.get('/blog',(req,res)=>{
-    res.render('site/blog') //burada sadece sayfayı çağırdım 
- })
- 
-
-
 
 /**burada ise serverimi görmek için app.listen komutunu kullandım */
 app.listen(port,hostname, () => {
