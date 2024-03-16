@@ -1,32 +1,8 @@
-/*const http=require('http')
-const fs=require('fs')
-const hostname ='127.0.0.1'
-const port =3000
-
-const indexPage=fs.readFileSync('index.html')
-const aboutPage=fs.readFileSync('about.html')
-
-
-const server=http.createServer( (req,res)=>{
-    if(req.url==='/'){
-        return res.end(indexPage)
-    } else if(req.url == '/about'){
-        return res.end(aboutPage)
-    }else{
-        res.statusCode=404
-         return res.end('sayfa bulunamadı')
-    }
-
-
-})
-
-server.listen(port,hostname,()=>{
-    console.log(` server çalışıyor,http://${hostname}:${port}`)
-})*/
 const path=require('path')
 const express = require('express')
 const exp = require('constants')
 const expphbs=require('express-handlebars')
+const mongoose = require('mongoose')
 
 
 
@@ -38,6 +14,10 @@ const hostname ='127.0.0.1'
 /**alttaki iki satırda handlebars ı kullandık */
  app.engine('handlebars', expphbs.engine());
  app.set('view engine', 'handlebars');
+
+ mongoose.connect('mongodb://127.0.0.1:3000/nodeblog_db')
+ .then(() => console.log('Connected!'))
+
 
 
  app.get('/',(req,res)=>{
