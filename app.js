@@ -3,6 +3,7 @@ const express = require('express')
 const exp = require('constants')
 const expphbs=require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 
 
@@ -16,13 +17,24 @@ const hostname ='127.0.0.1'
  app.set('view engine', 'handlebars');
 
 
+ // parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+
+
  //routers klasorünü kullanmak için klasörü dahil ettik
  const main=require('./routers/main')
  app.use('/',main)   //sayfa yönlendirmeleri için main klasörünü kullandım
+ //routers klasorünü kullanmak için klasörü dahil ettik
+ const posts=require('./routers/posts')
+ app.use('/posts',posts)   //sayfa yönlendirmeleri için posts klasörünü kullandım
 
 
-
- mongoose.connect('mongodb://127.0.0.1:3000/nodeblog_db')
+//mongodb bağlanma işlemleri dikkat et 
+ mongoose.connect('mongodb://127.0.0.1/nodeblog_db')
  .then(() => console.log('Connected!'))
 
 /**burada ise serverimi görmek için app.listen komutunu kullandım */
