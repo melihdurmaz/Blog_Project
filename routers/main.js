@@ -1,8 +1,10 @@
 //bu sınıf gerekli yönelndirmeleri yapmak için açıldı aynısı
 //app.js de de vardı ama temiz kod için ayrı bir js de yazdım
 
+const bodyParser = require('body-parser')
 const express=require('express')
 const router =express.Router()
+const Post=require('../models/post')
 
 
 router.get('/',(req,res)=>{
@@ -15,7 +17,13 @@ router.get('/about',(req,res)=>{
 
 
 router.get('/blog',(req,res)=>{
-    res.render('site/blog') //burada sadece sayfayı çağırdım 
+
+    Post.find({}).lean().then(posts => {
+        res.render('site/blog',{posts:posts})
+    })
+
+
+    
 })
 
 router.get('/contact',(req,res)=>{
@@ -28,12 +36,6 @@ router.get('/login',(req,res)=>{
 router.get('/register',(req,res)=>{
     res.render('site/register') //burada sadece sayfayı çağırdım 
 })
-router.get('/posts/new',(req,res)=>{
-    res.render('site/addpost') //burada sadece sayfayı çağırdım 
-})
 
-router.post('/posts/test',(req,res)=>{
-    res.send('test ok')
-})
 
 module.exports=router
