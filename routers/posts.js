@@ -1,24 +1,42 @@
-const bodyParser = require('body-parser')
-const express=require('express')
-const router =express.Router()
-const Post=require('../models/post')
+const bodyParser = require('body-parser');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const Post = require('../models/post');
+
+router.get('/new', (req, res) => {
+    res.render('site/addpost'); // Sadece sayfayı çağırdım 
+});
+
+router.get('/:id', (req, res) => {
+    Post.findById(req.params.id)
+        .then(post => {
+            res.render("site/post", { post: post.toJSON() })
+        })
+        .catch(err => {
+            console.error(err);
+            res.render('site/addpost')
+        });
+});
+
+router.post('/post/test', (req, res) => {
+    //yüklene görseli bir klasöre attım orada tutuyorum
+    let  post_image=req.files.post_image
+    post_image.mv(path.resolve(__dirname,'../Public/img/postimages',post_image.name))
 
 
-router.get('/new',(req,res)=>{
-    res.render('site/addpost') //burada sadece sayfayı çağırdım 
-})
+    Post.create({
+        ...req.body,
+        post_image: `/img/postimages/${post_image.name}`
+    })
+        .then(post => {
+            console.log(post)
+            res.redirect('/')
+        })
+        .catch(err => {
+            console.error(err)
+            res.status(500).send('Blog gönderisi oluşturulamadı')
+        });
+});
 
-router.post('/post/test',(req,res)=>{
-  // console.log(req.body) //body den kastımız add post sayfasında ki form girdileri
-  Post.create(req.body).
-  then(post => {
-    console.log(post);
-  })
-  .catch(err => {
-    console.error(err);
-  })
-   res.redirect('/')
-})
-
-module.exports=router
-
+module.exports = router
