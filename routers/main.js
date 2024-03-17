@@ -22,8 +22,6 @@ router.get('/blog',(req,res)=>{
         res.render('site/blog',{posts:posts})
     })
 
-
-    
 })
 
 router.get('/contact',(req,res)=>{
