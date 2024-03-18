@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/post/test', (req, res) => {
-    //yüklene görseli bir klasöre attım orada tutuyorum
+    //yüklenen görseli bir klasöre attım orada tutuyorum
     let  post_image=req.files.post_image
     post_image.mv(path.resolve(__dirname,'../Public/img/postimages',post_image.name))
 
