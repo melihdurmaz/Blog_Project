@@ -7,33 +7,20 @@ const router =express.Router()
 const Post=require('../models/post')
 
 
-router.get('/',(req,res)=>{
-    res.render('site/index') //burada sadece sayfayı çağırdım 
-})
-
-router.get('/about',(req,res)=>{
-    res.render('site/about') //burada sadece sayfayı çağırdım 
-})
-
-
-router.get('/blog',(req,res)=>{
-
+router.get('/blog', (req, res) => {
     Post.find({}).lean().then(posts => {
-        res.render('site/blog',{posts:posts})
-    })
+        const currentDate = new Date()
+        res.render('site/blog', { posts, date: currentDate })
+    });
+});
 
-})
 
-router.get('/contact',(req,res)=>{
-    res.render('site/contact') //burada sadece sayfayı çağırdım 
-})
 
-router.get('/login',(req,res)=>{
-    res.render('site/login') //burada sadece sayfayı çağırdım 
-})
-router.get('/register',(req,res)=>{
-    res.render('site/register') //burada sadece sayfayı çağırdım 
-})
+router.get('/',(req,res)=>{ res.render('site/index') })
+router.get('/about',(req,res)=>{res.render('site/about') })
+router.get('/contact',(req,res)=>{res.render('site/contact') })
+
+
 
 
 module.exports=router
