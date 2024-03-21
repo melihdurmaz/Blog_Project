@@ -1,11 +1,12 @@
-const bodyParser = require('body-parser');
-const express = require('express');
-const router = express.Router();
-const path = require('path');
-const Post = require('../models/post');
+const bodyParser = require('body-parser')
+const express = require('express')
+const router = express.Router()
+const path = require('path')
+const Post = require('../models/post')
+
 
 router.get('/new', (req, res) => {
-    res.render('site/addpost'); // Sadece sayfayı çağırdım 
+    res.render('site/addpost') // Sadece sayfayı çağırdım 
 });
 
 router.get('/:id', (req, res) => {
@@ -20,10 +21,9 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/post/test', (req, res) => {
-    //yüklenen görseli bir klasöre attım orada tutuyorum
-    let  post_image=req.files.post_image
-    post_image.mv(path.resolve(__dirname,'../Public/img/postimages',post_image.name))
-
+    // Yüklenen görseli bir klasöre attım orada tutuyorum
+    let post_image = req.files.post_image
+    post_image.mv(path.resolve(__dirname, '../Public/img/postimages', post_image.name))
 
     Post.create({
         ...req.body,
