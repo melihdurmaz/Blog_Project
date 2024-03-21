@@ -24,7 +24,8 @@ router.post('/login', async (req, res) => {
 
         if (user) {
             if (user.password == password) {
-                // Kullanıcı oturumu aç
+                // Kullanıcı oturum açtığında user id isini tutuyorum ki sürekli girş yapmak zorunda kalmasın
+                req.session.userId=user._id
                 res.redirect('/')
             } else {
                 res.redirect('/users/login')

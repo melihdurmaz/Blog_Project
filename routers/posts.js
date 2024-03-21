@@ -3,10 +3,16 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const Post = require('../models/post')
+const session = require('express-session')
 
 
 router.get('/new', (req, res) => {
-    res.render('site/addpost') // Sadece sayfayı çağırdım 
+    if(req.session.userId){ // burada eğer login olunmuşsa ife girer
+        res.render('site/addpost') // Sadece sayfayı çağırdım 
+    }else{
+        res.redirect('/users/login')// eğer login olunmamışsa bizi login sayfasına yönlendirir
+    }
+    
 });
 
 router.get('/:id', (req, res) => {

@@ -7,14 +7,21 @@ const hostname = '127.0.0.1'
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const fileUpload = require('express-fileupload')
-const moment = require('moment')
-moment.locale('tr')
 const expressSession = require('express-session')
-const connectMongo = require('connect-mongo')
+const MongoStore = require('connect-mongo')
 
 //mongodb bağlanma işlemleri dikkat et 
 mongoose.connect('mongodb://127.0.0.1/nodeblog_db')
 .then(() => console.log('Connected!'))
+
+
+
+app.use(expressSession({
+  secret:'testotaylan',
+  resave: false,
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: 'mongodb://127.0.0.1/nodeblog_db' })
+}))
 
 
 app.use(fileUpload())
